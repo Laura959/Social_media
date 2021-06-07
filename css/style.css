@@ -1,0 +1,116 @@
+body {
+    background-image: url("../img/blue.jpg");
+    background-color: #cccccc;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+    margin-left: 42%;
+    top: 7%;
+    color: #ffffff;
+    position: absolute;
+    font-size: 50px;
+}
+
+h2 {
+    text-align: center;
+    color: rgb(27, 123, 168);
+    margin-top: 10%;
+    font-size: 28px;
+}
+
+img {
+    width: 100%;
+    margin-bottom: -12%;
+    margin-right: -15%;
+    margin-left: -5%;
+    margin-top: -3%;
+}
+
+input {
+    margin-left: 10%;
+    margin-top: 7%;
+    height: 40px;
+    width: 80%;
+    border-radius: 10px;
+    border: 1.5px solid #c7c5c5;
+    padding-left: 2%;
+}
+
+input:hover {
+    border: 1px solid rgb(0, 145, 212);
+}
+
+button {
+    margin-left: 10%;
+    margin-top: 10%;
+    color: #ffffff;
+    font-weight: 600;
+    width: 83%;
+    background-color: rgb(33, 184, 253);
+    padding: 10px 25px 10px 25px;
+    border-radius: 10px;
+    border: solid rgb(33, 184, 253);
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: rgb(0, 145, 212);
+    border: solid rgb(0, 145, 212);
+}
+
+a {
+    color: rgb(27, 123, 168);
+    font-weight: 600;
+}
+
+a:hover {
+    color: rgb(0, 145, 212);
+}
+
+.main-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.container {
+    width: 85%;
+}
+
+.content {
+    width: 55%;
+    margin-top: 3%;
+    margin-left: 5%;
+    padding-left: 2%;
+    padding-top: 2%;
+}
+
+.img-div {
+    width: 80%;
+    background-color: rgb(147, 233, 255);
+    margin-left: 8%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.white-background {
+    background-color: #ffffff;
+    border-radius: 10px;
+    width: 100%;
+    margin-top: 12%;
+    margin-left: 18%;
+    -webkit-box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.18);
+    box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.18);
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+}
+
+.register {
+    margin-left: 10%;
+    margin-top: 7%;
+    margin-bottom: 27%;
+    font-size: 12px;
+    color: rgb(27, 123, 168);
+    letter-spacing: 0.5px;
+}
