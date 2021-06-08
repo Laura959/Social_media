@@ -41,14 +41,30 @@ switch ($path) {
     else {
       header("Content-type:application/json");
       http_response_code(200);
+      // $i=0;
+      // $arrayToSend = [];
+      // while($row = mysqli_fetch_assoc($statement)){
+      //     $item = '{ "title" = "'.$row['TITLE'].'", "description" = "'.$row['CONTENT'].'", "creation" = "'.$row['CREATION'].'", "author" = "'.$row['AUTHOR'].'"}';
+      //     array_push($arrayToSend, $item);
+      //      $i++; 
+      //     }
+      echo '[';
       $i=0;
-      $arrayToSend = [];
+      $number = mysqli_num_rows ( $statement );
       while($row = mysqli_fetch_assoc($statement)){
-          $item = "{ 'title' = '".$row['TITLE']."', 'description' = '".$row['CONTENT']."', 'creation' = '".$row['CREATION']."', 'author' = '".$row['AUTHOR']."'}";
-          array_push($arrayToSend, $item);
-           $i++; 
-          }
-      echo json_encode($arrayToSend);          
+
+        if($i == $number-1) {
+          echo json_encode($row);
+        } else {
+          echo json_encode($row);
+          echo ',';
+        }
+        
+          
+  
+        $i++;
+      }
+      echo ']';          
     }
     break;
   case '/login':

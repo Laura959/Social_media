@@ -16,7 +16,7 @@ function login() {
     if (http.status == 200) {
         var username = http.responseText;
         localStorage.setItem("storageName", username);
-        window.location.href = "main.php";
+        window.location.href = "main.html";
     } else {
         alert("wrong password!");
     }

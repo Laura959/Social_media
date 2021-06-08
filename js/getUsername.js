@@ -16,8 +16,19 @@ function getContentList() {
     var response = http.responseText;
 
     if (http.status == 200) {
+        console.log(response);
         const list = JSON.parse(response);
-        console.log(list[0]);
+        console.log(list);
+        var i = 0;
+        while (i < list.length) {
+            var content = document.getElementById('content');
+            var div = document.createElement('div');
+            content.appendChild(div);
+            var h1 = document.createElement('h1');
+            div.appendChild(h1);
+            h1.innerHTML = list[i].TITLE;
+            i++;
+        }
     } else {
         alert("Connection issues!");
     }
