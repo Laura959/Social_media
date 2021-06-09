@@ -32,7 +32,10 @@ $con = mysqli_connect($host, $user, $pass, $dbName);
 
 switch ($path) {
   case '/getContentList':
-    $sql = "SELECT * FROM news"; 
+    $sql = "SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL
+    FROM news
+    INNER JOIN users
+    ON news.AUTHOR = users.ID"; 
     $statement = mysqli_query($con,$sql);
     if (!$statement) {
       http_response_code(404);
