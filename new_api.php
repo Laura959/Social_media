@@ -94,9 +94,21 @@ switch ($path) {
             echo "Access denied";
           }
         }
-        break;
-}
- 
+        
+    }
+    break;
+case '/newEntry':
+    $sql = "INSERT INTO news (CONTENT, AUTHOR) VALUES ('".$input['content']."', (SELECT ID FROM users WHERE NAME = '".$input['username']."'))";
+    $statement = mysqli_query($con,$sql);
+
+    if (!$statement) {
+      http_response_code(404);
+      die("error");
+    }
+    else {
+      header("Content-type:application/json");
+            http_response_code(200);        
+    }
 
 }
  
