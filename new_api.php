@@ -2,7 +2,7 @@
 include_once ('connect.php');
  
 // get the HTTP method, path and body of the request, trim — Strip whitespace (or other characters) from the beginning and end of a string
-$method = $_SERVER['REQUEST_METHOD']; // issaiskina koki metoda naudoja request pvz GET
+// $method = $_SERVER['REQUEST_METHOD']; issaiskina koki metoda naudoja request pvz GET
 $path = $_SERVER['PATH_INFO'];
 
 // $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
@@ -10,25 +10,6 @@ $input = json_decode(file_get_contents('php://input'),true); //grazina array
 
 // connect to the mysql database
 $con = mysqli_connect($host, $user, $pass, $dbName);
-
-// switch ($method) {
-//   case 'GET':
-//     $sql = "SELECT * FROM news"; 
-//     $statement = mysqli_query($con,$sql);
-//     if (!$statement) {
-//       http_response_code(404);
-//       die("error");
-//       }
-//     else {
-//       header("Content-type:application/json");
-//           http_response_code(200);
-//           $row = mysqli_fetch_assoc($statement);
-//           echo $row;
-//     }
-//     break;
-//   case 'POST':
-//     $sql = "SELECT * FROM users WHERE EMAIL = '".$input['username']."'"; break;
-// }
 
 switch ($path) {
   case '/getContentList':
@@ -44,13 +25,6 @@ switch ($path) {
     else {
       header("Content-type:application/json");
       http_response_code(200);
-      // $i=0;
-      // $arrayToSend = [];
-      // while($row = mysqli_fetch_assoc($statement)){
-      //     $item = '{ "title" = "'.$row['TITLE'].'", "description" = "'.$row['CONTENT'].'", "creation" = "'.$row['CREATION'].'", "author" = "'.$row['AUTHOR'].'"}';
-      //     array_push($arrayToSend, $item);
-      //      $i++; 
-      //     }
       echo '[';
       $i=0;
       $number = mysqli_num_rows ( $statement );
@@ -62,9 +36,6 @@ switch ($path) {
           echo json_encode($row);
           echo ',';
         }
-        
-          
-  
         $i++;
       }
       echo ']';          
@@ -109,7 +80,55 @@ case '/newEntry':
       header("Content-type:application/json");
             http_response_code(200);        
     }
-
+    break;
+case '/editEntry':
+    $sql = "UPDATE news
+    SET CONTENT = '".$input['content']."'
+    WHERE ID = '".$input['id']."'
+    AND AUTHOR = (SELECT users.ID
+    FROM users
+    WHERE users.NAME = ".$input['activeUser'].")";
+    $statement = mysqli_query($con,$sql); 
+    if (!$statement) {
+      http_response_code(403);
+      die("error");
+    }
+    else {
+      header("Content-type:application/json");
+            http_response_code(200);        
+    }
+    break; 
+case '/deleteEntry':
+  $sql = "DELETE FROM news WHERE ID = '".$input['id']."'";
+  $statement = mysqli_query($con,$sql); 
+  if (!$statement) {
+    http_response_code(403);
+    die("error");
+  }
+  else {
+    header("Content-type:application/json");
+          http_response_code(200);        
+  }
+  break; 
+case '/likeEntry':
+  $sql = INSERT IGNORE into likes(NEWS_ID, PERSON) VALUES(1, 1) ;
+  $statement = mysqli_query($con,$sql); 
+  if 
+  if() {
+  $sql = "INSERT INTO likes VALUES (".$input['id'].", (SELECT users.ID
+  FROM users
+  WHERE users.NAME = ".$input['activeUser']."))";
+  $statement = mysqli_query($con,$sql); 
+  if (!$statement) {
+    http_response_code(403);
+    die("error");
+  }
+  else {
+    header("Content-type:application/json");
+          http_response_code(200);        
+  }
+}
+  break;    
 }
  
 // print results, insert id or affected row count

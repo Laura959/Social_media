@@ -57,6 +57,7 @@
                 infoDiv.appendChild(h3);
                 h3.innerHTML = list[i].CREATION;
                 var p = document.createElement('p');
+                p.setAttribute('id', 'id-' + list[i].ID);
                 textDiv.appendChild(p);
                 p.innerHTML = list[i].CONTENT;
 
@@ -67,14 +68,23 @@
                 var like = document.createElement('button');
                 buttons.appendChild(like);
                 like.setAttribute('class', 'like');
+                like.setAttribute('onclick', 'likeNews(this.id);'); // for FF
+                like.onclick = function() { likeNews(this.id); }; // for IE
+                like.setAttribute('id', 'like-' + list[i].ID);
                 like.innerHTML = 'Like';
                 var edit = document.createElement('button');
                 buttons.appendChild(edit);
                 edit.setAttribute('class', 'edit');
+                edit.setAttribute('onclick', 'editNews(this.id);'); // for FF
+                edit.onclick = function() { editNews(this.id); }; // for IE
+                edit.setAttribute('id', list[i].ID);
                 edit.innerHTML = 'Edit';
                 var deleted = document.createElement('button');
                 buttons.appendChild(deleted);
                 deleted.setAttribute('class', 'delete');
+                deleted.setAttribute('onclick', 'deleteNews(this.id);'); // for FF
+                deleted.onclick = function() { deleteNews(this.id); }; // for IE
+                deleted.setAttribute('id', 'delete-' + list[i].ID);
                 deleted.innerHTML = 'Delete';
                 var inputDiv = document.createElement('div');
                 buttons.appendChild(inputDiv);
@@ -102,6 +112,108 @@
 
         var http = new XMLHttpRequest();
         var url = "http://localhost:8888/newEntry";
+
+        http.open("POST", url, false);
+        http.send(jsonString);
+        var response = http.responseText;
+
+        if (http.status == 200) {
+            alert("Success!");
+        } else {
+            alert("Entry was not posted");
+        }
+    }
+
+    function editNews(id) {
+        var id = id;
+        var content = document.getElementById('id-' + id).innerHTML;
+        var textarea = document.getElementById('news-entry');
+        textarea.innerHTML = content;
+        var modal = document.getElementById("myModal");
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        var button = document.getElementById('create-news');
+        button.onclick = function() {
+            var alteredDescription = new Object();
+            alteredDescription.activeUser = activeUser;
+            alteredDescription.content = document.getElementById('news-entry').value;
+            alteredDescription.id = id;
+            console.log(alteredDescription.activeUser);
+
+            var jsonString = JSON.stringify(alteredDescription);
+
+            var http = new XMLHttpRequest();
+            var url = "http://localhost:8888/editEntry";
+
+            http.open("POST", url, false);
+            http.send(jsonString);
+
+            if (http.status == 200) {
+                alert("Success!");
+            } else {
+                alert("Only news author can edit news!");
+            }
+        }
+    }
+
+    function deleteNews(id) {
+        var newId = id.substring(7);
+        var modal = document.getElementById("myModal-delete");
+        var span = document.getElementsByClassName("closed")[0];
+        modal.style.display = "block";
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        var button = document.getElementById('delete-news');
+        button.onclick = function() {
+            var deleteDescription = new Object();
+            deleteDescription.id = newId;
+
+            var jsonString = JSON.stringify(deleteDescription);
+
+            var http = new XMLHttpRequest();
+            var url = "http://localhost:8888/deleteEntry";
+
+            http.open("POST", url, false);
+            http.send(jsonString);
+
+            if (http.status == 200) {
+                alert("Success!");
+                modal.style.display = "none";
+            } else {
+                alert("Error");
+                modal.style.display = "none";
+            }
+
+        }
+    }
+
+    function likeNews(id) {
+        var like = new Object();
+        like.id = id;
+        like.username = activeUser;
+
+        var jsonString = JSON.stringify(like);
+
+        var http = new XMLHttpRequest();
+        var url = "http://localhost:8888/likeEntry";
 
         http.open("POST", url, false);
         http.send(jsonString);

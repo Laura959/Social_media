@@ -126,7 +126,8 @@ label #cancel {
 
 /* Modal Content/Box */
 
-.modal-content {
+.modal-content,
+.delete-modal-content {
     background-color: #fefefe;
     margin: 15% auto;
     /* 15% from the top and centered */
@@ -146,7 +147,9 @@ label #cancel {
 }
 
 .close:hover,
-.close:focus {
+.close:focus,
+.closed:hover,
+.closed:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
