@@ -13,10 +13,9 @@ $con = mysqli_connect($host, $user, $pass, $dbName);
 
 switch ($path) {
   case '/getContentList':
-    $sql = "SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL
-    FROM news
-    INNER JOIN users
-    ON news.AUTHOR = users.ID"; 
+    // $sql = "SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL, COUNT(likes.PERSON) as LIKES FROM news INNER JOIN users ON news.AUTHOR = users.ID INNER JOIN likes ON news.ID = likes.NEWS_ID";
+    $sql = "SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL FROM news INNER JOIN users ON news.AUTHOR = users.ID";  
+    // SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL, (SELECT COUNT(likes.PERSON) as LIKES FROM news INNER JOIN users ON news.AUTHOR = users.ID INNER JOIN likes ON news.ID = likes.NEWS_ID WHERE (COUNT(DISTINCT news.ID) = 1)) as COUNT FROM news INNER JOIN users ON news.AUTHOR = users.ID GROUP BY news.ID
     $statement = mysqli_query($con,$sql);
     if (!$statement) {
       http_response_code(404);
@@ -29,16 +28,19 @@ switch ($path) {
       $i=0;
       $number = mysqli_num_rows ( $statement );
       while($row = mysqli_fetch_assoc($statement)){
-
         if($i == $number-1) {
+          $row['LIKES'] = countLikes($row['ID']);
+          $row['COMMENTS'] = countComments($row['ID']);
           echo json_encode($row);
         } else {
+          $row['LIKES'] = countLikes($row['ID']);
+          $row['COMMENTS'] = countComments($row['ID']);
           echo json_encode($row);
           echo ',';
         }
         $i++;
       }
-      echo ']';          
+      echo ']'; 
     }
     break;
   case '/login':
@@ -54,8 +56,6 @@ switch ($path) {
     }
     else {
       header("Content-type:application/json");
-        
-
         while ($row = mysqli_fetch_assoc($statement)){
           if ($row['PASS'] == $input['pass']) {
             http_response_code(200);
@@ -64,30 +64,32 @@ switch ($path) {
             http_response_code(403);
             echo "Access denied";
           }
-        }
-        
+        } 
     }
     break;
 case '/newEntry':
     $sql = "INSERT INTO news (CONTENT, AUTHOR) VALUES ('".$input['content']."', (SELECT ID FROM users WHERE NAME = '".$input['username']."'))";
+    // $sql2 = "SELECT ID from news WHERE AUTHOR = (SELECT ID FROM users WHERE NAME = '".$input['username']."') ORDER BY ID DESC LIMIT 1 ";
     $statement = mysqli_query($con,$sql);
-
+    
     if (!$statement) {
       http_response_code(404);
       die("error");
     }
     else {
+      // $statement2 = mysqli_query($con,$sql2);
+      // $result = mysqli_fetch_assoc($statement2);
       header("Content-type:application/json");
+      // likePost($result['ID'], $input['username']);
+      
             http_response_code(200);        
     }
     break;
 case '/editEntry':
-    $sql = "UPDATE news
-    SET CONTENT = '".$input['content']."'
-    WHERE ID = '".$input['id']."'
-    AND AUTHOR = (SELECT users.ID
-    FROM users
-    WHERE users.NAME = ".$input['activeUser'].")";
+    $sql = "UPDATE news SET CONTENT = '".$input['content']."' 
+    WHERE ID = '".$input['id']."' 
+    AND AUTHOR = (SELECT users.ID FROM users 
+    WHERE users.NAME = '".$input['activeUser']."')";
     $statement = mysqli_query($con,$sql); 
     if (!$statement) {
       http_response_code(403);
@@ -111,39 +113,76 @@ case '/deleteEntry':
   }
   break; 
 case '/likeEntry':
-  $sql = INSERT IGNORE into likes(NEWS_ID, PERSON) VALUES(1, 1) ;
-  $statement = mysqli_query($con,$sql); 
-  if 
-  if() {
-  $sql = "INSERT INTO likes VALUES (".$input['id'].", (SELECT users.ID
-  FROM users
-  WHERE users.NAME = ".$input['activeUser']."))";
+    $sql = "INSERT IGNORE into likes(NEWS_ID, PERSON) VALUES('".$input['id']."', (SELECT ID
+    FROM users
+    WHERE users.NAME = '".$input['activeUser']."'))";
+    $statement = mysqli_query($con,$sql); 
+    $affectedRows = mysqli_affected_rows($con);
+    if ($affectedRows == 0) {
+      http_response_code(403);
+      die("error");
+    }
+    else {
+      header("Content-type:application/json");
+      http_response_code(200);
+
+    }
+  break; 
+case '/showComments':
+    $sql = "SELECT comments.CONTENT, comments.CREATION, users.NAME, users.SURNAME, users.EMAIL FROM comments INNER JOIN users ON comments.AUTHOR = users.ID WHERE comments.NEWS_ID = ".$input['id']."";
+    $statement = mysqli_query($con,$sql);
+    if (!$statement) {
+      http_response_code(404);
+      die("error");
+      }
+    else {
+      header("Content-type:application/json");
+      http_response_code(200);
+      echo '[';
+      $i=0;
+      $number = mysqli_num_rows ( $statement );
+      while($row = mysqli_fetch_assoc($statement)){
+        if($i == $number-1) {
+          echo json_encode($row);
+        } else {
+          echo json_encode($row);
+          echo ',';
+        }
+        $i++;
+      }
+      echo ']'; 
+    }
+    break;
+}
+
+
+function countLikes($id) {
+    $sql = "SELECT COUNT(likes.PERSON) as LIKES FROM news INNER JOIN users ON news.AUTHOR = users.ID INNER JOIN likes ON news.ID = likes.NEWS_ID WHERE news.ID = $id";
+  global $con;
   $statement = mysqli_query($con,$sql); 
   if (!$statement) {
-    http_response_code(403);
     die("error");
   }
   else {
-    header("Content-type:application/json");
-          http_response_code(200);        
+    while($row = mysqli_fetch_assoc($statement)){
+        return $row['LIKES'];
+    }
   }
 }
-  break;    
+
+function countComments($id) {
+  $sql = "SELECT COUNT(AUTHOR) as comm FROM comments WHERE NEWS_ID = $id";
+  global $con;
+  $statement = mysqli_query($con,$sql); 
+  if (!$statement) {
+    die("error");
+  }
+  else {
+  while($row = mysqli_fetch_assoc($statement)){
+      return $row['comm'];
+  }
 }
- 
-// print results, insert id or affected row count
-// if ($method == 'GET') {
-//   if (!$key) echo '[';
-//   for ($i=0;$i<mysqli_num_rows($statement);$i++) {
-//     echo ($i>0?',':'').json_encode(mysqli_fetch_object($statement));
-//   }
-//   if (!$key) echo ']';
-// } elseif ($method == 'POST') {
-//   echo mysqli_insert_id($con);
-// } else {
-//   echo mysqli_affected_rows($con);
-// }
- 
+}
 // close mysql connection
 mysqli_close($con);
 ?>

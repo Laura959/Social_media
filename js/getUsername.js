@@ -1,11 +1,9 @@
     var activeUser;
 
     function getUsername() {
-        var main = new Object();
-        main.username = localStorage.getItem("storageName");
         activeUser = localStorage.getItem("storageName");
         var name = document.getElementById('username');
-        name.innerHTML = main.username;
+        name.innerHTML = activeUser;
         getContentList();
     }
 
@@ -16,11 +14,9 @@
         http.open("GET", url, false);
         http.send();
         var response = http.responseText;
-
+        console.log(response);
         if (http.status == 200) {
-            console.log(response);
             const list = JSON.parse(response);
-            console.log(list);
             var i = 0;
             while (i < list.length) {
                 var body = document.getElementById('section');
@@ -72,6 +68,9 @@
                 like.onclick = function() { likeNews(this.id); }; // for IE
                 like.setAttribute('id', 'like-' + list[i].ID);
                 like.innerHTML = 'Like';
+                var span = document.createElement('span');
+                like.appendChild(span);
+                span.innerHTML = list[i].LIKES; 
                 var edit = document.createElement('button');
                 buttons.appendChild(edit);
                 edit.setAttribute('class', 'edit');
@@ -87,14 +86,25 @@
                 deleted.setAttribute('id', 'delete-' + list[i].ID);
                 deleted.innerHTML = 'Delete';
                 var inputDiv = document.createElement('div');
+                inputDiv.setAttribute('id', 'all-comments')
                 buttons.appendChild(inputDiv);
+                var placeForComments = document.createElement('div');
+                inputDiv.appendChild(placeForComments);
                 var comment = document.createElement('input');
                 inputDiv.appendChild(comment);
                 comment.setAttribute('type', 'text');
                 comment.setAttribute('class', 'comment');
                 comment.setAttribute('name', 'comment');
                 comment.setAttribute('placeholder', 'Write your comment');
-
+                var spanComment = document.createElement('span');
+                inputDiv.appendChild(spanComment);
+                var link = document.createElement('a');
+                spanComment.appendChild(link);
+                link.setAttribute('href', '#');
+                link.setAttribute('id', 'comment-' + list[i].ID);
+                link.setAttribute('onclick', 'showComments(this.id);'); // for FF
+                link.onclick = function() { showComments(this.id); }; // for IE
+                link.innerHTML = list[i].COMMENTS+' comments'; 
                 i++;
             }
         } else {
@@ -116,7 +126,7 @@
         http.open("POST", url, false);
         http.send(jsonString);
         var response = http.responseText;
-
+        console.log(response);
         if (http.status == 200) {
             alert("Success!");
         } else {
@@ -206,9 +216,10 @@
     }
 
     function likeNews(id) {
+        var newId = id.substring(5);
         var like = new Object();
-        like.id = id;
-        like.username = activeUser;
+        like.id = newId;
+        like.activeUser = activeUser;
 
         var jsonString = JSON.stringify(like);
 
@@ -217,15 +228,68 @@
 
         http.open("POST", url, false);
         http.send(jsonString);
-        var response = http.responseText;
 
         if (http.status == 200) {
             alert("Success!");
         } else {
-            alert("Entry was not posted");
+            alert("You already liked this post");
         }
     }
 
+    function showComments(id) {
+        var newId = id.substring(8);
+        var comment = new Object();
+        comment.id = newId;
+
+        var jsonString = JSON.stringify(comment);
+
+        var http = new XMLHttpRequest();
+        var url = "http://localhost:8888/showComments";
+
+        http.open("POST", url, false);
+        http.send(jsonString);
+        var response = http.responseText;
+        console.log(response);
+        if (http.status == 200) {
+            const list = JSON.parse(response);
+            var i = 0;
+            while (i < list.length) {
+                var body = document.getElementById(newId).parentElement.getElementById('all-comments');
+                var content = document.createElement('div');
+                body.appendChild(content);
+                content.setAttribute('id', 'comment-content');
+                var card = document.createElement('div');
+                content.appendChild(card);
+                
+                // Text Content
+                var textDiv = document.createElement('div');
+                card.appendChild(textDiv);
+                var newsText = document.createElement('div');
+                textDiv.appendChild(newsText);
+                newsText.setAttribute('class', 'comments-text');
+                var portfolioImg = document.createElement('img');
+                newsText.appendChild(portfolioImg);
+                portfolioImg.setAttribute('alt', 'portfolio');
+                portfolioImg.setAttribute('src', '#');
+                var infoDiv = document.createElement('div');
+                newsText.appendChild(infoDiv);
+                var h2 = document.createElement('h2');
+                infoDiv.appendChild(h2);
+                h2.setAttribute('id', 'username3');
+                h2.innerHTML = list[i].NAME;
+                var h3 = document.createElement('h3');
+                infoDiv.appendChild(h3);
+                h3.innerHTML = list[i].CREATION;
+                var p = document.createElement('p');
+                p.setAttribute('id', 'idc-' + list[i].ID);
+                textDiv.appendChild(p);
+                p.innerHTML = list[i].CONTENT;
+                i++;
+            }
+        } else {
+            alert("Error");
+        }
+    }
 
     // Get the modal
     var modal = document.getElementById("myModal");

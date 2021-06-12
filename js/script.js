@@ -11,7 +11,6 @@ function login() {
 
     http.open("POST", url, false);
     http.send(jsonString);
-    var response = http.responseText;
 
     if (http.status == 200) {
         var username = http.responseText;
