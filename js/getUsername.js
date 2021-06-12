@@ -86,10 +86,7 @@
                 deleted.setAttribute('id', 'delete-' + list[i].ID);
                 deleted.innerHTML = 'Delete';
                 var inputDiv = document.createElement('div');
-                inputDiv.setAttribute('id', 'all-comments')
                 buttons.appendChild(inputDiv);
-                var placeForComments = document.createElement('div');
-                inputDiv.appendChild(placeForComments);
                 var comment = document.createElement('input');
                 inputDiv.appendChild(comment);
                 comment.setAttribute('type', 'text');
@@ -254,7 +251,7 @@
             const list = JSON.parse(response);
             var i = 0;
             while (i < list.length) {
-                var body = document.getElementById(newId).parentElement.getElementById('all-comments');
+                var body = document.getElementById(id).parentElement.parentElement;
                 var content = document.createElement('div');
                 body.appendChild(content);
                 content.setAttribute('id', 'comment-content');
