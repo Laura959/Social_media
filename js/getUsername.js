@@ -1,10 +1,138 @@
     var activeUser;
 
+    document.getElementById('search').addEventListener('keyup', function(event) {
+        if (event.code === 'Enter') {
+            event.preventDefault();
+            var searchTerm = new Object();
+            searchTerm.content = event.target.value;
+
+            console.log(searchTerm);
+
+            var jsonString = JSON.stringify(searchTerm);
+
+            var http = new XMLHttpRequest();
+            var url = "http://localhost:8888/searchNews";
+
+            http.open("POST", url, false);
+            http.send(jsonString);
+            var response = http.responseText;
+            console.log(response);
+            if (http.status == 200) {
+                const list = JSON.parse(response);
+                var i = 0;
+                var replace = document.getElementById('get-container');
+                replace.parentNode.removeChild(replace);
+                var body = document.getElementById('section');
+                var getContainer = document.createElement('div');
+                body.appendChild(getContainer);
+                getContainer.setAttribute('id', 'get-container');
+                while (i < list.length) {
+                    var content = document.createElement('div');
+                    getContainer.appendChild(content);
+                    content.setAttribute('class', 'content');
+                    var card = document.createElement('div');
+                    content.appendChild(card);
+                    var image = document.createElement('div');
+                    card.appendChild(image);
+                    image.setAttribute('class', 'image');
+                    var postImage = document.createElement('img');
+                    image.appendChild(postImage);
+                    postImage.setAttribute('alt', 'img');
+                    postImage.setAttribute('src', '#');
+
+                    // Text Content
+                    var textDiv = document.createElement('div');
+                    card.appendChild(textDiv);
+                    var newsText = document.createElement('div');
+                    textDiv.appendChild(newsText);
+                    newsText.setAttribute('class', 'news-text');
+                    var portfolioImg = document.createElement('img');
+                    newsText.appendChild(portfolioImg);
+                    portfolioImg.setAttribute('alt', 'portfolio');
+                    portfolioImg.setAttribute('src', '#');
+                    var infoDiv = document.createElement('div');
+                    newsText.appendChild(infoDiv);
+                    var h2 = document.createElement('h2');
+                    infoDiv.appendChild(h2);
+                    h2.setAttribute('id', 'username2');
+                    h2.innerHTML = list[i].NAME;
+                    var h3 = document.createElement('h3');
+                    infoDiv.appendChild(h3);
+                    h3.innerHTML = list[i].CREATION;
+                    var p = document.createElement('p');
+                    p.setAttribute('id', 'id-' + list[i].ID);
+                    textDiv.appendChild(p);
+                    p.innerHTML = list[i].CONTENT;
+
+                    //buttons and comment field
+                    var buttons = document.createElement('div');
+                    card.appendChild(buttons);
+                    buttons.setAttribute('class', 'buttons');
+                    var like = document.createElement('button');
+                    buttons.appendChild(like);
+                    like.setAttribute('class', 'like');
+                    like.setAttribute('onclick', 'likeNews(this.id);'); // for FF
+                    like.onclick = function() { likeNews(this.id); }; // for IE
+                    like.setAttribute('id', 'like-' + list[i].ID);
+                    like.innerHTML = 'Like';
+                    var span = document.createElement('span');
+                    like.appendChild(span);
+                    span.innerHTML = list[i].LIKES;
+                    var edit = document.createElement('button');
+                    buttons.appendChild(edit);
+                    edit.setAttribute('class', 'edit');
+                    edit.setAttribute('onclick', 'editNews(this.id);'); // for FF
+                    edit.onclick = function() { editNews(this.id); }; // for IE
+                    edit.setAttribute('id', list[i].ID);
+                    edit.innerHTML = 'Edit';
+                    var deleted = document.createElement('button');
+                    buttons.appendChild(deleted);
+                    deleted.setAttribute('class', 'delete');
+                    deleted.setAttribute('onclick', 'deleteNews(this.id);'); // for FF
+                    deleted.onclick = function() { deleteNews(this.id); }; // for IE
+                    deleted.setAttribute('id', 'delete-' + list[i].ID);
+                    deleted.innerHTML = 'Delete';
+                    var inputDiv = document.createElement('div');
+                    buttons.appendChild(inputDiv);
+                    var comment = document.createElement('textarea');
+                    inputDiv.appendChild(comment);
+                    comment.setAttribute('rows', '1');
+                    comment.setAttribute('cols', '15');
+                    comment.setAttribute('class', 'comment');
+                    comment.setAttribute('name', 'comment');
+                    comment.setAttribute('placeholder', 'Write your comment');
+                    comment.setAttribute('id', 'new-com-' + list[i].ID);
+                    var comBtn = document.createElement('button');
+                    inputDiv.appendChild(comBtn);
+                    comBtn.innerHTML = "Submit";
+                    comBtn.setAttribute('onclick', 'submitComment(this.id);'); // for FF
+                    comBtn.onclick = function() { submitComment(this.id); }; // for IE
+                    comBtn.setAttribute('id', 'btn-id-' + list[i].ID);
+                    var spanComment = document.createElement('span');
+                    inputDiv.appendChild(spanComment);
+                    var link = document.createElement('a');
+                    spanComment.appendChild(link);
+                    link.setAttribute('href', '#');
+                    link.setAttribute('id', 'comment-' + list[i].ID);
+                    link.setAttribute('onclick', 'showComments(this.id);'); // for FF
+                    link.onclick = function() { showComments(this.id); }; // for IE
+                    link.innerHTML = list[i].COMMENTS + ' comments';
+                    i++;
+                }
+            } else {
+                alert("Connection issues!");
+            }
+            alert("Success!");
+        }
+    });
+
     function getUsername() {
         activeUser = localStorage.getItem("storageName");
         var name = document.getElementById('username');
         name.innerHTML = activeUser;
         getContentList();
+
+        // function searchNews
     }
 
     function getContentList() {
@@ -14,15 +142,17 @@
         http.open("GET", url, false);
         http.send();
         var response = http.responseText;
-        console.log(response);
         if (http.status == 200) {
             const list = JSON.parse(response);
             var i = 0;
+            var body = document.getElementById('section');
+            var getContainer = document.createElement('div');
+            body.appendChild(getContainer);
+            getContainer.setAttribute('id', 'get-container');
             while (i < list.length) {
-                var body = document.getElementById('section');
                 var content = document.createElement('div');
-                body.appendChild(content);
-                content.setAttribute('id', 'content');
+                getContainer.appendChild(content);
+                content.setAttribute('class', 'content');
                 var card = document.createElement('div');
                 content.appendChild(card);
                 var image = document.createElement('div');
@@ -70,7 +200,7 @@
                 like.innerHTML = 'Like';
                 var span = document.createElement('span');
                 like.appendChild(span);
-                span.innerHTML = list[i].LIKES; 
+                span.innerHTML = list[i].LIKES;
                 var edit = document.createElement('button');
                 buttons.appendChild(edit);
                 edit.setAttribute('class', 'edit');
@@ -87,12 +217,20 @@
                 deleted.innerHTML = 'Delete';
                 var inputDiv = document.createElement('div');
                 buttons.appendChild(inputDiv);
-                var comment = document.createElement('input');
+                var comment = document.createElement('textarea');
                 inputDiv.appendChild(comment);
-                comment.setAttribute('type', 'text');
+                comment.setAttribute('rows', '1');
+                comment.setAttribute('cols', '15');
                 comment.setAttribute('class', 'comment');
                 comment.setAttribute('name', 'comment');
                 comment.setAttribute('placeholder', 'Write your comment');
+                comment.setAttribute('id', 'new-com-' + list[i].ID);
+                var comBtn = document.createElement('button');
+                inputDiv.appendChild(comBtn);
+                comBtn.innerHTML = "Submit";
+                comBtn.setAttribute('onclick', 'submitComment(this.id);'); // for FF
+                comBtn.onclick = function() { submitComment(this.id); }; // for IE
+                comBtn.setAttribute('id', 'btn-id-' + list[i].ID);
                 var spanComment = document.createElement('span');
                 inputDiv.appendChild(spanComment);
                 var link = document.createElement('a');
@@ -101,7 +239,7 @@
                 link.setAttribute('id', 'comment-' + list[i].ID);
                 link.setAttribute('onclick', 'showComments(this.id);'); // for FF
                 link.onclick = function() { showComments(this.id); }; // for IE
-                link.innerHTML = list[i].COMMENTS+' comments'; 
+                link.innerHTML = list[i].COMMENTS + ' comments';
                 i++;
             }
         } else {
@@ -233,6 +371,8 @@
         }
     }
 
+    var timesClicked;
+
     function showComments(id) {
         var newId = id.substring(8);
         var comment = new Object();
@@ -249,15 +389,28 @@
         console.log(response);
         if (http.status == 200) {
             const list = JSON.parse(response);
+            console.log(id);
             var i = 0;
+            // if (timesClicked == 1) {
+            //     var body = document.getElementById('all-coments');
+            //     body.style.display = "none";
+            //     timesClicked = 2;
+            // } else if (timesClicked == 2) {
+            //     var body = document.getElementById('all-coments');
+            //     body.style.display = "block";
+            //     timesClicked = 1;
+            // } else {
+            var body = document.getElementById(id).parentElement.parentElement;
+            var container = document.createElement('div');
+            body.appendChild(container);
+            container.setAttribute('id', 'all-coments' + id);
             while (i < list.length) {
-                var body = document.getElementById(id).parentElement.parentElement;
                 var content = document.createElement('div');
-                body.appendChild(content);
-                content.setAttribute('id', 'comment-content');
+                container.appendChild(content);
+                content.setAttribute('class', 'comment-content');
                 var card = document.createElement('div');
                 content.appendChild(card);
-                
+
                 // Text Content
                 var textDiv = document.createElement('div');
                 card.appendChild(textDiv);
@@ -274,6 +427,7 @@
                 infoDiv.appendChild(h2);
                 h2.setAttribute('id', 'username3');
                 h2.innerHTML = list[i].NAME;
+                h2.style.color = "red";
                 var h3 = document.createElement('h3');
                 infoDiv.appendChild(h3);
                 h3.innerHTML = list[i].CREATION;
@@ -283,10 +437,60 @@
                 p.innerHTML = list[i].CONTENT;
                 i++;
             }
+            // timesClicked = 1;
+            var showless = document.createElement('div');
+            body.appendChild(showless);
+            showless.setAttribute('id', 'show-less' + id);
+            var a = document.createElement('a');
+            showless.appendChild(a);
+            a.innerHTML = "Hide comments";
+            a.setAttribute('href', '#');
+            a.setAttribute('onclick', 'hideComments(id);'); // for FF
+            a.onclick = function() { hideComments(id); }; // for IE
+            // }
         } else {
             alert("Error");
         }
     }
+
+    function hideComments(id) {
+        console.log(id);
+        var body = document.getElementById('all-coments' + id);
+        var showless = document.getElementById('show-less' + id);
+        body.parentNode.removeChild(body);
+        showless.parentNode.removeChild(showless);
+
+    }
+
+    function submitComment(id) {
+        console.log("submit comment" + id);
+        var newId = id.substring(7);
+        var newComment = new Object();
+        newComment.content = document.getElementById('new-com-' + newId).value; //news_id, activeUser, content
+        newComment.username = activeUser;
+        newComment.id = newId; //news id
+        console.log(newComment);
+
+        var jsonString = JSON.stringify(newComment);
+
+        var http = new XMLHttpRequest();
+        var url = "http://localhost:8888/newComment";
+
+        http.open("POST", url, false);
+        http.send(jsonString);
+        var response = http.responseText;
+
+        if (http.status == 200) {
+            var textarea = document.getElementById('new-com-' + newId);
+            textarea.value = "";
+            alert("Success!");
+        } else {
+            alert("Entry was not posted");
+        }
+    }
+
+    // };
+
 
     // Get the modal
     var modal = document.getElementById("myModal");
