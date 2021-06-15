@@ -15,8 +15,7 @@ header("Access-Control-Allow-Origin"); //remove in production
 
 switch ($path) {
   case '/getContentList':
-    // $sql = "SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL, COUNT(likes.PERSON) as LIKES FROM news INNER JOIN users ON news.AUTHOR = users.ID INNER JOIN likes ON news.ID = likes.NEWS_ID";
-    $sql = "SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL FROM news INNER JOIN users ON news.AUTHOR = users.ID";  
+    $sql = "SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL, users.IMAGE, news.NEWS_IMAGE FROM news INNER JOIN users ON news.AUTHOR = users.ID ORDER BY news.ID DESC";  
     // SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL, (SELECT COUNT(likes.PERSON) as LIKES FROM news INNER JOIN users ON news.AUTHOR = users.ID INNER JOIN likes ON news.ID = likes.NEWS_ID WHERE (COUNT(DISTINCT news.ID) = 1)) as COUNT FROM news INNER JOIN users ON news.AUTHOR = users.ID GROUP BY news.ID
     $statement = mysqli_query($con,$sql);
     if (!$statement) {
