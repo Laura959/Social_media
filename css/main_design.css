@@ -13,6 +13,24 @@ section {
     transition: all .5s;
 }
 
+p {
+    margin-left: 4%;
+    margin-top: 8%;
+    margin-bottom: 8%;
+    font-size: 20px;
+}
+
+nav {
+    margin-bottom: 2%;
+}
+
+#top-menu {
+    display: flex;
+    flex-direction: row;
+    margin-left: 10%;
+    margin-top: 2%;
+}
+
 .sidebar {
     position: fixed;
     left: -250px;
@@ -21,6 +39,30 @@ section {
     background-color: #cef0f5;
     transition: all .5s ease;
     margin-top: -0.5%;
+}
+
+.content {
+    width: 28%;
+    min-width: 250px;
+    display: inline-block;
+    /* position: relative; */
+    margin: 1% 2% 1% 2%;
+    border-radius: 20px;
+    border: solid 2px #D2D1D1;
+}
+
+.news-image {
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.portfolio-image {
+    width: 18%;
+    margin-top: 3%;
+    margin-left: 3%;
+    border: solid 2px #d6d6d6;
+    border-radius: 50%;
 }
 
 .sidebar header {
@@ -44,6 +86,123 @@ section {
     border-top: 1px solid #727272;
     border-bottom: 1px solid black;
     transition: .4s;
+}
+
+.news-text {
+    display: flex;
+    flex-direction: row;
+}
+
+.info-div {
+    margin-left: 4%;
+    margin-top: 3%;
+}
+
+.h2-username {
+    margin-bottom: 0;
+}
+
+.upload-time {
+    margin-top: 0;
+}
+
+.fa-thumbs-up,
+.fa-edit,
+.fa-trash-alt {
+    color: #7ca4e0;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.fa-thumbs-up:hover,
+.fa-edit:hover,
+.fa-trash-alt:hover {
+    color: #195abb;
+}
+
+.like-div,
+.edit-div,
+.delete-div {
+    display: flex;
+    flex-direction: row;
+    margin-left: 12%;
+    margin-right: 12%;
+    color: #585858;
+}
+
+.like-div,
+.delete-div,
+.edit-div div {
+    font-size: 18px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.like-div div {
+    margin-left: 8%;
+}
+
+.buttons {
+    margin-left: 5%;
+    margin-bottom: 6%;
+    display: flex;
+    flex-direction: row;
+}
+
+.like,
+.edit,
+.delete {
+    background-color: #ffffff;
+    border: #ffffff;
+    color: #7ca4e0;
+    font-size: 18px;
+}
+
+.comment-button {
+    height: 66px;
+    width: 15%;
+    font-size: 18px;
+    background-color: #7ca4e0;
+    border: #7ca4e0;
+    color: #ffffff;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+}
+
+.comment-button:hover {
+    background-color: #195abb;
+}
+
+.like {
+    display: flex;
+    flex-direction: row;
+}
+
+.comment {
+    width: 85%;
+    height: 66px;
+    /* margin-left: 4%; */
+    margin-top: 2%;
+    margin-bottom: -5%;
+    border-bottom-left-radius: 10px;
+    background-color: #ffffff;
+    border: solid 1px #7ca4e0;
+    padding: 2%;
+    padding-top: 3%;
+    padding-left: 3%;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.number-of-comments {
+    margin-left: 78%;
+    margin-top: 8%;
+    font-size: 18px
+}
+
+.number-of-comments:visited,
+.number-of-comments:active {
+    color: #585858;
 }
 
 ul li:hover a {
@@ -105,6 +264,12 @@ label #cancel {
 
 #username {
     margin-left: 1%;
+}
+
+#get-container {
+    margin: 0 auto;
+    width: 90%;
+    padding-left: 3%;
 }
 
 
