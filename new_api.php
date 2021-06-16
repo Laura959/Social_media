@@ -69,8 +69,7 @@ switch ($path) {
     }
     break;
 case '/newEntry':
-    $sql = "INSERT INTO news (CONTENT, AUTHOR) VALUES ('".$input['content']."', (SELECT ID FROM users WHERE NAME = '".$input['username']."'))";
-    // $sql2 = "SELECT ID from news WHERE AUTHOR = (SELECT ID FROM users WHERE NAME = '".$input['username']."') ORDER BY ID DESC LIMIT 1 ";
+    $sql = "INSERT INTO news (CONTENT, AUTHOR, NEWS_IMAGE) VALUES ('".$input['content']."', (SELECT ID FROM users WHERE NAME = '".$input['username']."'), '".$input['image']."')";
     $statement = mysqli_query($con,$sql);
     
     if (!$statement) {
@@ -78,27 +77,32 @@ case '/newEntry':
       die("error");
     }
     else {
-      // $statement2 = mysqli_query($con,$sql2);
-      // $result = mysqli_fetch_assoc($statement2);
       header("Content-type:application/json");
-      // likePost($result['ID'], $input['username']);
       
             http_response_code(200);        
     }
     break;
 case '/editEntry':
-    $sql = "UPDATE news SET CONTENT = '".$input['content']."' 
+  if ($input['image'] != "") {
+    $sql = "UPDATE news SET CONTENT = '".$input['content']."', NEWS_IMAGE =  '".$input['image']."'
     WHERE ID = '".$input['id']."' 
     AND AUTHOR = (SELECT users.ID FROM users 
     WHERE users.NAME = '".$input['activeUser']."')";
+  } else {
+    $sql = "UPDATE news SET CONTENT = '".$input['content']."'
+    WHERE ID = '".$input['id']."' 
+    AND AUTHOR = (SELECT users.ID FROM users 
+    WHERE users.NAME = '".$input['activeUser']."')";
+  }
     $statement = mysqli_query($con,$sql); 
-    if (!$statement) {
+    $affectedRows = mysqli_affected_rows($con);
+    if ($affectedRows == 0) {
       http_response_code(403);
       die("error");
     }
     else {
       header("Content-type:application/json");
-            http_response_code(200);        
+      http_response_code(200);    
     }
     break; 
 case '/deleteEntry':
@@ -110,7 +114,7 @@ case '/deleteEntry':
   }
   else {
     header("Content-type:application/json");
-          http_response_code(200);        
+    http_response_code(200);        
   }
   break; 
 case '/likeEntry':
@@ -126,11 +130,10 @@ case '/likeEntry':
     else {
       header("Content-type:application/json");
       http_response_code(200);
-
     }
   break; 
 case '/showComments':
-    $sql = "SELECT comments.CONTENT, comments.CREATION, users.NAME, users.SURNAME, users.EMAIL FROM comments INNER JOIN users ON comments.AUTHOR = users.ID WHERE comments.NEWS_ID = ".$input['id']."";
+    $sql = "SELECT comments.CONTENT, comments.CREATION, users.NAME, users.SURNAME, users.EMAIL, users.IMAGE FROM comments INNER JOIN users ON comments.AUTHOR = users.ID WHERE comments.NEWS_ID = ".$input['id']."";
     $statement = mysqli_query($con,$sql);
     if (!$statement) {
       http_response_code(404);
@@ -168,7 +171,7 @@ case '/newComment':
   }
   break;
 case '/searchNews':
-  $sql = "SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL FROM news INNER JOIN users ON news.AUTHOR = users.ID WHERE users.NAME LIKE '%".$input['content']."%' OR news.CONTENT LIKE '%".$input['content']."%' 
+  $sql = "SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL, users.IMAGE, news.NEWS_IMAGE FROM news INNER JOIN users ON news.AUTHOR = users.ID WHERE users.NAME LIKE '%".$input['content']."%' OR news.CONTENT LIKE '%".$input['content']."%' 
   ORDER BY news.ID DESC"; 
   // $sql = "SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL FROM news INNER JOIN users ON news.AUTHOR = users.ID";   
       $statement = mysqli_query($con,$sql);

@@ -1,4 +1,6 @@
     var activeUser;
+    let base64String = "";
+    console.log(base64String);
 
     document.getElementById('search').addEventListener('keyup', function(event) {
         if (event.code === 'Enter') {
@@ -39,6 +41,7 @@
                     image.appendChild(postImage);
                     postImage.setAttribute('alt', 'img');
                     postImage.setAttribute('class', 'news-image');
+                    postImage.setAttribute('id', 'image-' + list[i].ID);
                     postImage.setAttribute('src', "data:image/gif;base64," + list[i].NEWS_IMAGE + "");
 
                     // Text Content
@@ -79,9 +82,9 @@
                     var like = document.createElement('button');
                     likeDiv.appendChild(like);
                     like.setAttribute('class', 'like');
-                    like.setAttribute('onclick', 'likeNews(this.id);'); // for FF
-                    like.onclick = function() { likeNews(this.id); }; // for IE
-                    like.setAttribute('id', 'like-' + list[i].ID);
+                    likeDiv.setAttribute('onclick', 'likeNews(this.id);'); // for FF
+                    likeDiv.onclick = function() { likeNews(this.id); }; // for IE
+                    likeDiv.setAttribute('id', 'like-' + list[i].ID);
                     like.setAttribute('type', 'submit');
                     var likeIcon = document.createElement('i');
                     like.appendChild(likeIcon);
@@ -98,9 +101,9 @@
                     var edit = document.createElement('button');
                     editDiv.appendChild(edit);
                     edit.setAttribute('class', 'edit');
-                    edit.setAttribute('onclick', 'editNews(this.id);'); // for FF
-                    edit.onclick = function() { editNews(this.id); }; // for IE
-                    edit.setAttribute('id', list[i].ID);
+                    editDiv.setAttribute('onclick', 'editNews(this.id);'); // for FF
+                    editDiv.onclick = function() { editNews(this.id); }; // for IE
+                    editDiv.setAttribute('id', list[i].ID);
                     var editIcon = document.createElement('i');
                     edit.appendChild(editIcon);
                     editIcon.setAttribute('class', 'far fa-edit');
@@ -113,9 +116,9 @@
                     var deleted = document.createElement('button');
                     deleteDiv.appendChild(deleted);
                     deleted.setAttribute('class', 'delete');
-                    deleted.setAttribute('onclick', 'deleteNews(this.id);'); // for FF
-                    deleted.onclick = function() { deleteNews(this.id); }; // for IE
-                    deleted.setAttribute('id', 'delete-' + list[i].ID);
+                    deleteDiv.setAttribute('onclick', 'deleteNews(this.id);'); // for FF
+                    deleteDiv.onclick = function() { deleteNews(this.id); }; // for IE
+                    deleteDiv.setAttribute('id', 'delete-' + list[i].ID);
                     var deleteIcon = document.createElement('i');
                     deleted.appendChild(deleteIcon);
                     deleteIcon.setAttribute('class', 'far fa-trash-alt');
@@ -154,7 +157,6 @@
             } else {
                 alert("Connection issues!");
             }
-            alert("Success!");
         }
     });
 
@@ -194,6 +196,7 @@
                 image.appendChild(postImage);
                 postImage.setAttribute('alt', 'img');
                 postImage.setAttribute('class', 'news-image');
+                postImage.setAttribute('id', 'image-' + list[i].ID);
                 postImage.setAttribute('src', "data:image/gif;base64," + list[i].NEWS_IMAGE + "");
 
                 // Text Content
@@ -234,9 +237,9 @@
                 var like = document.createElement('button');
                 likeDiv.appendChild(like);
                 like.setAttribute('class', 'like');
-                like.setAttribute('onclick', 'likeNews(this.id);'); // for FF
-                like.onclick = function() { likeNews(this.id); }; // for IE
-                like.setAttribute('id', 'like-' + list[i].ID);
+                likeDiv.setAttribute('onclick', 'likeNews(this.id);'); // for FF
+                likeDiv.onclick = function() { likeNews(this.id); }; // for IE
+                likeDiv.setAttribute('id', 'like-' + list[i].ID);
                 like.setAttribute('type', 'submit');
                 var likeIcon = document.createElement('i');
                 like.appendChild(likeIcon);
@@ -253,9 +256,9 @@
                 var edit = document.createElement('button');
                 editDiv.appendChild(edit);
                 edit.setAttribute('class', 'edit');
-                edit.setAttribute('onclick', 'editNews(this.id);'); // for FF
-                edit.onclick = function() { editNews(this.id); }; // for IE
-                edit.setAttribute('id', list[i].ID);
+                editDiv.setAttribute('onclick', 'editNews(this.id);'); // for FF
+                editDiv.onclick = function() { editNews(this.id); }; // for IE
+                editDiv.setAttribute('id', list[i].ID);
                 var editIcon = document.createElement('i');
                 edit.appendChild(editIcon);
                 editIcon.setAttribute('class', 'far fa-edit');
@@ -268,9 +271,9 @@
                 var deleted = document.createElement('button');
                 deleteDiv.appendChild(deleted);
                 deleted.setAttribute('class', 'delete');
-                deleted.setAttribute('onclick', 'deleteNews(this.id);'); // for FF
-                deleted.onclick = function() { deleteNews(this.id); }; // for IE
-                deleted.setAttribute('id', 'delete-' + list[i].ID);
+                deleteDiv.setAttribute('onclick', 'deleteNews(this.id);'); // for FF
+                deleteDiv.onclick = function() { deleteNews(this.id); }; // for IE
+                deleteDiv.setAttribute('id', 'delete-' + list[i].ID);
                 var deleteIcon = document.createElement('i');
                 deleted.appendChild(deleteIcon);
                 deleteIcon.setAttribute('class', 'far fa-trash-alt');
@@ -315,6 +318,7 @@
         var newsDescription = new Object();
         newsDescription.content = document.getElementById('news-entry').value;
         newsDescription.username = activeUser;
+        newsDescription.image = base64String;
         console.log(newsDescription);
 
         var jsonString = JSON.stringify(newsDescription);
@@ -329,6 +333,7 @@
         if (http.status == 200) {
             location.reload();
             document.getElementById('news-entry').value = "";
+            document.getElementById('avatar').value = "";
             modal.style.display = "none";
             return false;
         } else {
@@ -337,10 +342,9 @@
     }
 
     function editNews(id) {
-        var id = id;
         var content = document.getElementById('id-' + id).innerHTML;
         var textarea = document.getElementById('news-entry');
-        textarea.innerHTML = content;
+        textarea.value = content;
         var modal = document.getElementById("myModal");
         var span = document.getElementsByClassName("close")[0];
         modal.style.display = "block";
@@ -360,8 +364,8 @@
             var alteredDescription = new Object();
             alteredDescription.activeUser = activeUser;
             alteredDescription.content = document.getElementById('news-entry').value;
+            alteredDescription.image = base64String;
             alteredDescription.id = id;
-            console.log(alteredDescription.activeUser);
 
             var jsonString = JSON.stringify(alteredDescription);
 
@@ -374,6 +378,7 @@
             if (http.status == 200) {
                 location.reload();
                 modal.style.display = "none";
+                document.getElementById("avatar").value = "";
                 return false;
             } else {
                 alert("Only news author can edit news!");
@@ -397,6 +402,7 @@
         }
 
         var button = document.getElementById('delete-news');
+
         button.onclick = function() {
             var deleteDescription = new Object();
             deleteDescription.id = newId;
@@ -467,6 +473,7 @@
             var container = document.createElement('div');
             body.appendChild(container);
             container.setAttribute('id', 'all-coments' + id);
+            container.setAttribute('class', 'comment-container');
             while (i < list.length) {
                 var content = document.createElement('div');
                 container.appendChild(content);
@@ -479,33 +486,38 @@
                 card.appendChild(textDiv);
                 var newsText = document.createElement('div');
                 textDiv.appendChild(newsText);
-                newsText.setAttribute('class', 'comments-text');
+                newsText.setAttribute('class', 'news-text');
                 var portfolioImg = document.createElement('img');
                 newsText.appendChild(portfolioImg);
                 portfolioImg.setAttribute('alt', 'portfolio');
-                portfolioImg.setAttribute('src', '#');
+                portfolioImg.setAttribute('class', 'portfolio-image-C');
+                portfolioImg.setAttribute('src', "data:image/gif;base64," + list[i].IMAGE + "");
                 var infoDiv = document.createElement('div');
                 newsText.appendChild(infoDiv);
+                infoDiv.setAttribute('class', 'info-div');
                 var h2 = document.createElement('h2');
                 infoDiv.appendChild(h2);
-                h2.setAttribute('id', 'username3');
+                h2.setAttribute('id', 'username2');
+                h2.setAttribute('class', 'h2-username');
                 h2.innerHTML = list[i].NAME;
-                h2.style.color = "red";
                 var h3 = document.createElement('h3');
                 infoDiv.appendChild(h3);
+                h3.setAttribute('class', 'upload-time');
                 h3.innerHTML = list[i].CREATION;
                 var p = document.createElement('p');
-                p.setAttribute('id', 'idc-' + list[i].ID);
+                p.setAttribute('id', 'id-' + list[i].ID);
+                p.setAttribute('class', 'comment-p');
                 textDiv.appendChild(p);
                 p.innerHTML = list[i].CONTENT;
                 i++;
             }
-            // timesClicked = 1;
             var showless = document.createElement('div');
-            body.appendChild(showless);
+            container.appendChild(showless);
+            showless.setAttribute('class', 'show-less-div');
             showless.setAttribute('id', 'show-less' + id);
             var a = document.createElement('a');
             showless.appendChild(a);
+            a.setAttribute('class', 'show-less');
             a.innerHTML = "Hide comments";
             a.setAttribute('href', '#');
             a.setAttribute('onclick', 'hideComments(id);'); // for FF
@@ -546,7 +558,8 @@
         if (http.status == 200) {
             var textarea = document.getElementById('new-com-' + newId);
             textarea.value = "";
-            alert("Success!");
+            location.reload();
+            return false;
         } else {
             alert("Entry was not posted");
         }
@@ -556,8 +569,24 @@
         window.location = "index.html";
     }
 
-    // };
+    function contact() {
+        alert("Laura Stončė, Email: laura.stonce@stud.vtmc.lt");
+    }
 
+    function imageUploaded() {
+        var file = document.querySelector(
+            'input[type=file]')['files'][0];
+
+        var reader = new FileReader();
+
+        reader.onload = function() {
+            base64String = reader.result.replace("data:", "")
+                .replace(/^.+,/, "");
+
+            imageBase64Stringsep = base64String;
+        }
+        reader.readAsDataURL(file);
+    }
 
     // Get the modal
     var modal = document.getElementById("myModal");
@@ -571,6 +600,8 @@
     // When the user clicks on the button, open the modal
     btn.onclick = function() {
         modal.style.display = "block";
+        document.getElementById("create-news").setAttribute('onclick', 'newEntry()');
+        document.getElementById("news-entry").value = "";
     }
 
     // When the user clicks on <span> (x), close the modal
