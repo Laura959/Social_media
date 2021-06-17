@@ -38,3 +38,11 @@ Pavyzdys (vietoj nurodyto kelio iki failo, įrašykite savo kelią iki new_api.p
 ir paspauskite "Enter". Komandinėje eilutėje turi atsirasti įrašas:
 
 ##### PHP 7.4.20 Development Server (http://localhost:8888) started
+
+11. Kai atliksite minėtus veiksmus, XAMPP kontrolės skydelyje, prie "Apache" paspauskite "Admin" mygtuką. Atsivers naršykės langas, kurio viršutinėje meniu juostoje, dešinėje pusėje rasite nuorodą "phpMyAdmin". Paspauskite ant šios nuorodos ir prisijunkite prie duomenų bazės (Vartotojas "root", jei nesukūrėte slaptažodžio, slapažodžio eilutę palikite tuščią. 
+12. Sukurkite duomenų bazę pavadinimu "facebook" ir importuokite atsisiųsto Social_media projekto "db" faile esančią duomenų bazę "facebook":
+
+![duombaze](https://user-images.githubusercontent.com/70938274/122462750-a17ca080-cfbd-11eb-8973-7264fd316b3c.PNG)
+
+![import](https://user-images.githubusercontent.com/70938274/122463272-17810780-cfbe-11eb-883b-74d780c8ffca.PNG)
+
