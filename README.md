@@ -19,5 +19,14 @@ ___
 ![](https://devtuts.butlerccwebdev.net/testserver/xampp-control-panel.png)
 
 7. Kontrolės skydelyje paleiskite "Apache" ir "Mysql" servisus, tai padarysite paspaudę ant "Stop" mygtukų, esančių šalia minėtų modulių. 
-8. Tame pačiame kontrolės skydelį paspauskite ant "Shell" mygtuko. 
+8. Tame pačiame kontrolės skydelį paspauskite ant "Shell" mygtuko. "Shell" langas atrodo taip: 
 
+![](https://i.stack.imgur.com/kf2oI.jpg)
+
+9. Kai atidarėte komandinę eilutę, pakeiskite savo darbinę direktoriją. Jums reikės atsidurti atsisiųsto projekto "Social_media" failo viduje. Tą galite padaryti komandinėje eilutėje ("Shell") suvedę:
+
+cd [kelias iki Social media new_api.php failo]
+
+Pavyzdys (vietoj nurodyto kelio iki failo, įrašykite savo kelią iki new_api.php failo): 
+
+![shell_cd](https://user-images.githubusercontent.com/70938274/122460816-45188180-cfbb-11eb-8b1b-1afcd5cd716e.PNG)
