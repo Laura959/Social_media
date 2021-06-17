@@ -67,6 +67,16 @@ Duomenų bazėje, "Users" lentelėje rasite prisijungimo vardus ir slaptažodži
 
 ___
 
-## Programos naudojimo instrukcija"
+## Programos naudojimo instrukcija
+
+1. Suveskite vartotojo elektroninį paštą ir slaptažodį (šią informaciją rasite duomenų bazėje, "Users" lentelėje):
+
+![index](https://user-images.githubusercontent.com/70938274/122466369-e4d90e00-cfc1-11eb-800d-17f95cd95312.PNG)
 
 
+2. Atsidarius pagrindiniam programos langui viršutinėje, kairėje lango pusėje rasite "Hamburger" mygtuką. Paskauskite ant jo, šis mygtukas atidarys meniu juostą. 
+..*Meniu juostoje galėsite sukurti naują įrašą paspaudę ant "New entry" nuorodos. Sukūrus įrašą bus atvaizduota kortelė su įrašu ir paveikslėliu, jei tokį įkelsite. ..*Kortelėje "Edit" mygtukas leidžia koreguoti įrašą, "Like" mygtukas pamėgti, o "Delete" mygtukas ištrinti įrašą. 
+..*Kortelės apačioje rasite komentaro laukelį, kur galėsite įrašyti savo komentarą. Įrašytą komentarą galėsite perskaityti paspaudę ant nuorodos, esančios šalia komentaro įvedimo laukelio **"X comments"**. Komentarų langą suskleisti galėsite paspaudę ant komentarų pabaigoje esančios nuorodos **"Hide comments"**. 
+..*Įrašų paiešką galėsite vykdyti suvedę paieškos žodį į laukelį, esantį puslapio viršuje, kairėje pusėj ir paspaudę "Enter" mygtuką. 
+
+Gero naudojimo!
