@@ -33,8 +33,8 @@ Pavyzdys (vietoj nurodyto kelio iki failo, įrašykite savo kelią iki new_api.p
 
 10. Kai pakeitėte darbinę direktoriją, suveskite šią komandą:
 
-### php -S localhost:8888 new_api.php
+#### php -S localhost:8888 new_api.php
 
 ir paspauskite "Enter". Komandinėje eilutėje turi atsirasti įrašas:
 
-### PHP 7.4.20 Development Server (http://localhost:8888) started
+##### PHP 7.4.20 Development Server (http://localhost:8888) started
