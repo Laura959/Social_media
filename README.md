@@ -1,4 +1,4 @@
-##Sveiki!
+## Sveiki!
 ___
 
-##Apie projektą
+## Apie projektą
