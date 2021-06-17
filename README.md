@@ -30,3 +30,11 @@ cd [kelias iki Social media new_api.php failo]
 Pavyzdys (vietoj nurodyto kelio iki failo, įrašykite savo kelią iki new_api.php failo): 
 
 ![shell_cd](https://user-images.githubusercontent.com/70938274/122460816-45188180-cfbb-11eb-8b1b-1afcd5cd716e.PNG)
+
+10. Kai pakeitėte darbinę direktoriją, suveskite šią komandą:
+
+### php -S localhost:8888 new_api.php
+
+ir paspauskite "Enter". Komandinėje eilutėje turi atsirasti įrašas:
+
+### PHP 7.4.20 Development Server (http://localhost:8888) started
