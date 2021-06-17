@@ -77,6 +77,8 @@ ___
 2. Atsidarius pagrindiniam programos langui viršutinėje, kairėje lango pusėje rasite "Hamburger" mygtuką. Paskauskite ant jo, šis mygtukas atidarys meniu juostą. 
 ..*Meniu juostoje galėsite sukurti naują įrašą paspaudę ant "New entry" nuorodos. Sukūrus įrašą bus atvaizduota kortelė su įrašu ir paveikslėliu, jei tokį įkelsite. ..*Kortelėje "Edit" mygtukas leidžia koreguoti įrašą, "Like" mygtukas pamėgti, o "Delete" mygtukas ištrinti įrašą. 
 ..*Kortelės apačioje rasite komentaro laukelį, kur galėsite įrašyti savo komentarą. Įrašytą komentarą galėsite perskaityti paspaudę ant nuorodos, esančios šalia komentaro įvedimo laukelio **"X comments"**. Komentarų langą suskleisti galėsite paspaudę ant komentarų pabaigoje esančios nuorodos **"Hide comments"**. 
-..*Įrašų paiešką galėsite vykdyti suvedę paieškos žodį į laukelį, esantį puslapio viršuje, kairėje pusėj ir paspaudę "Enter" mygtuką. 
+..*Įrašų paiešką galėsite vykdyti suvedę paieškos žodį į laukelį, esantį puslapio viršuje, kairėje pusėj ir paspaudę "Enter" mygtuką.
+
+![main](https://user-images.githubusercontent.com/70938274/122468578-8feac700-cfc4-11eb-955d-8f22e1b0e6af.PNG)
 
 Gero naudojimo!
