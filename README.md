@@ -50,7 +50,7 @@ ir importuokite atsisiųsto Social_media projekto "db" faile esančią duomenų 
 
 12. Atidarykite naršyklę (programa daugiausia ištestuota ant Firefox naršyklės, tad rekomenduoju naudoti būtent šią naršyklę, tačiau ir su kitomis naršyklėmis programa turėtų veikti). Naršyklėje, url juostoje suveskite kelią iki projekto: 
 
-pvz: "localhost/dashboard/Facebook projektas/"
+pvz: "localhost/dashboard/Social_media-master/"
 
 13. Jums bus atidarytas prisijungimo langas, su pasveikinimu "Welcome".
 14. Prieš pradedant naudotis programa atsisiųskite **"CORS"** (angl. "Cross-Origin Resource Sharing") plėtinį:
@@ -69,7 +69,7 @@ ___
 
 ## Programos naudojimo instrukcija
 
-1. Suveskite vartotojo elektroninį paštą ir slaptažodį (šią informaciją rasite duomenų bazėje, "Users" lentelėje):
+1. Suveskite vartotojo elektroninį paštą ("Jonis@gmail.co"m) ir slaptažodį ("Jonukas") (apie kitus vartotojusinformaciją rasite duomenų bazėje, "Users" lentelėje):
 
 ![index](https://user-images.githubusercontent.com/70938274/122466369-e4d90e00-cfc1-11eb-800d-17f95cd95312.PNG)
 
