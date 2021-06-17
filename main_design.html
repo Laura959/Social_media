@@ -30,9 +30,7 @@
     <section id="section">
         <nav>
             <div id="top-menu">
-                <!-- <form> -->
                 <input type="text" id="search" name="search" placeholder="Search news"><i class="fas fa-search"></i>
-                <!-- </form> -->
                 <div class='div-username'><span id="username"></span></div>
                 <button class="logout" onclick="logout()"><i class="fas fa-sign-out-alt logout-top"></i></button>
             </div>
@@ -44,7 +42,7 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <h1 class="entry">News Entry</h1>
-                <textarea id="news-entry" name="news-entry" rows="6" cols="50" placeholder="Enter your text"></textarea>
+                <textarea id="news-entry" name="news-entry" rows="6" cols="50" placeholder="Enter your text" maxlength="400"></textarea>
                 <label id="label-avatar" for="avatar">Choose a profile picture:</label>
                 <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" onchange="imageUploaded()">
                 <button type="button" id="create-news">Submit</button>

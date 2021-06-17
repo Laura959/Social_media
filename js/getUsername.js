@@ -364,6 +364,7 @@
             var alteredDescription = new Object();
             alteredDescription.activeUser = activeUser;
             alteredDescription.content = document.getElementById('news-entry').value;
+            console.log(id);
             alteredDescription.image = base64String;
             alteredDescription.id = id;
 

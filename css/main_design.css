@@ -54,7 +54,6 @@ nav {
     width: 28%;
     min-width: 397px;
     display: inline-block;
-    /* position: relative; */
     margin: 1% 2% 1% 2%;
     border-radius: 20px;
     border: solid 2px #D2D1D1;
@@ -303,12 +302,6 @@ nav {
     border-bottom-right-radius: 20px;
 }
 
-
-/* .logout-left {
-    font-size: 20px;
-    color: #ffffff;
-} */
-
 .logout-top {
     font-size: 30px;
     color: #7ca4e0;
@@ -447,16 +440,12 @@ label #cancel {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-
-/* Modal Content/Box */
-
 .modal-content,
 .delete-modal-content {
     background-color: #fefefe;
     margin-left: 35%;
     margin-top: 10%;
     position: fixed;
-    /* 15% from the top and centered */
     border-radius: 15px;
     padding: 20px;
     border: 1px solid #888;
@@ -525,7 +514,7 @@ label #cancel {
     cursor: pointer;
 }
 
-@media only screen and (max-width: 1620px) {
+@media only screen and (min-width: 1501px) and (max-width: 1600px) {
     .fa-thumbs-up,
     .fa-edit,
     .fa-trash-alt {
@@ -535,6 +524,15 @@ label #cancel {
     .delete-div,
     .edit-div div {
         font-size: 20px;
+    }
+    #check:checked~section .content {
+        width: 40%;
+    }
+    .comment-container {
+        width: 37.5%;
+    }
+    .comment {
+        margin-bottom: -5.5%;
     }
     .number-of-comments {
         margin-left: 70%;
@@ -547,7 +545,7 @@ label #cancel {
     }
 }
 
-@media only screen and (max-width: 1500px) {
+@media only screen and (min-width: 987px) and (max-width: 1500px) {
     #search {
         margin-left: 1%;
     }
@@ -556,6 +554,13 @@ label #cancel {
     }
     .content {
         width: 42%;
+    }
+    .fa-search {
+        margin-top: 1.5%;
+        margin-left: -3%;
+    }
+    .buttons {
+        margin-left: 4%;
     }
     .comment {
         margin-bottom: -5%;
@@ -566,6 +571,162 @@ label #cancel {
     #get-container {
         margin-left: 5%;
     }
+    #news-entry {
+        width: 76%;
+    }
 }
 
-@media only screen and (max-width: 1024px) {}
+@media only screen and (min-width: 601px) and (max-width: 986px) {
+    p {
+        margin-top: 4%;
+        margin-bottom: 2%;
+    }
+    .content {
+        margin: 1% 2% 6% 2%;
+        width: 80%;
+        max-width: 560px;
+    }
+    .modal-content,
+    .delete-modal-content {
+        margin-left: 7%;
+        margin-top: 5%;
+        width: 80%;
+    }
+    .fa-search {
+        margin-top: 5.5%;
+        margin-left: -5%;
+        font-size: 20px;
+    }
+    .div-username {
+        margin-left: 43%;
+        font-size: 21px;
+        margin-top: 5%;
+    }
+    .logout-top {
+        font-size: 28px;
+        margin-top: 75%;
+    }
+    .number-of-comments {
+        margin-left: 70%;
+    }
+    .comment {
+        margin-bottom: -5%;
+    }
+    .comment-container {
+        width: 82%;
+    }
+    .like-div,
+    .delete-div,
+    .edit-div div {
+        font-size: 20px;
+    }
+    .buttons {
+        margin-left: 8%;
+    }
+    #check:checked~section #get-container {
+        margin-left: -3%;
+    }
+    #check:checked~section #top-menu {
+        margin-left: 1.5%;
+    }
+    #news-entry {
+        width: 76%;
+    }
+    #create-news {
+        margin-left: 72%;
+    }
+    #get-container {
+        margin-left: 8%;
+    }
+    label #btn {
+        font-size: 26px;
+        top: 6.8%;
+        left: 9%;
+    }
+    #delete-news {
+        margin-left: 28%;
+    }
+    #top-menu {
+        margin-left: 15%;
+        margin-top: 1.5%;
+    }
+    #search {
+        margin-top: 4%;
+        height: 35px;
+        font-size: 15px;
+        width: 35%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    p {
+        margin-top: 4%;
+        margin-bottom: 2%;
+    }
+    .content {
+        margin: 1% 2% 6% 2%;
+    }
+    .modal-content,
+    .delete-modal-content {
+        margin-left: 5%;
+        margin-top: 12%;
+        width: 80%;
+    }
+    .fa-search {
+        margin-top: 7%;
+        margin-left: -9%;
+        font-size: 20px;
+    }
+    .div-username {
+        margin-left: 20%;
+        font-size: 21px;
+        margin-top: 5%;
+    }
+    .logout-top {
+        font-size: 28px;
+        margin-top: 30%;
+    }
+    .number-of-comments {
+        margin-left: 70%;
+    }
+    .comment {
+        margin-bottom: -6%;
+    }
+    .comment-container {
+        width: 82%;
+    }
+    .like-div,
+    .delete-div,
+    .edit-div div {
+        font-size: 20px;
+    }
+    .buttons {
+        margin-left: 3%;
+    }
+    #news-entry {
+        width: 76%;
+    }
+    #create-news {
+        margin-left: 65%;
+    }
+    #get-container {
+        margin-left: 3%;
+    }
+    label #btn {
+        font-size: 26px;
+        top: 5%;
+        left: 9%;
+    }
+    #delete-news {
+        margin-left: 20%;
+    }
+    #top-menu {
+        margin-left: 21%;
+    }
+    #search {
+        margin-top: 4%;
+        height: 35px;
+        font-size: 15px;
+        width: auto;
+    }
+}

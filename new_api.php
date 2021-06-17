@@ -1,11 +1,8 @@
 <?php
 include_once ('connect.php');
  
-// get the HTTP method, path and body of the request, trim — Strip whitespace (or other characters) from the beginning and end of a string
-// $method = $_SERVER['REQUEST_METHOD']; issaiskina koki metoda naudoja request pvz GET
 $path = $_SERVER['PATH_INFO'];
 
-// $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
 $input = json_decode(file_get_contents('php://input'),true); //grazina array
 
 // connect to the mysql database
@@ -16,7 +13,6 @@ header("Access-Control-Allow-Origin"); //remove in production
 switch ($path) {
   case '/getContentList':
     $sql = "SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL, users.IMAGE, news.NEWS_IMAGE FROM news INNER JOIN users ON news.AUTHOR = users.ID ORDER BY news.ID DESC";  
-    // SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL, (SELECT COUNT(likes.PERSON) as LIKES FROM news INNER JOIN users ON news.AUTHOR = users.ID INNER JOIN likes ON news.ID = likes.NEWS_ID WHERE (COUNT(DISTINCT news.ID) = 1)) as COUNT FROM news INNER JOIN users ON news.AUTHOR = users.ID GROUP BY news.ID
     $statement = mysqli_query($con,$sql);
     if (!$statement) {
       http_response_code(404);
@@ -172,8 +168,7 @@ case '/newComment':
   break;
 case '/searchNews':
   $sql = "SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL, users.IMAGE, news.NEWS_IMAGE FROM news INNER JOIN users ON news.AUTHOR = users.ID WHERE users.NAME LIKE '%".$input['content']."%' OR news.CONTENT LIKE '%".$input['content']."%' 
-  ORDER BY news.ID DESC"; 
-  // $sql = "SELECT news.ID, news.TITLE, news.CONTENT, news.CREATION, users.NAME, users.SURNAME, users.EMAIL FROM news INNER JOIN users ON news.AUTHOR = users.ID";   
+  ORDER BY news.ID DESC";   
       $statement = mysqli_query($con,$sql);
   if (!$statement) {
     http_response_code(404);
