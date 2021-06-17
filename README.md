@@ -63,8 +63,10 @@ Firefox naršyklei galite atsisiųsti [čia](https://addons.mozilla.org/lt/firef
 
 ![slap](https://user-images.githubusercontent.com/70938274/122465495-d76f5400-cfc0-11eb-9888-bbdd903d3296.PNG)
 
-Duomenų bazėje, "Users" lentelėje rasite prisijungimo vardus ir slaptažodžius, su kuriais galėsite prisijungti prie Social Media programos. Gero naudojimo :)
+Duomenų bazėje, "Users" lentelėje rasite prisijungimo vardus ir slaptažodžius, su kuriais galėsite prisijungti prie Social Media programos. 
 
+___
 
+## Programos naudojimo instrukcija"
 
 
